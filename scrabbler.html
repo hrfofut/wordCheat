@@ -1,0 +1,102 @@
+ <!DOCTYPE html>
+<html>
+<meta charset="utf-8"/>
+<title>Word Winner</title>
+<head>
+<script type="text/javascript">
+var txtFile = "Loading...";
+var len =0;
+var letters ="";
+function myFunction() {	
+	letters = document.getElementById("box").value;
+	len = letters.length;
+	letters = letters.toLowerCase();
+    //document.getElementById("result").innerHTML = letters+" "+len;
+    loadFile();
+}
+    function loadFile() {
+    var let2="";
+    var let3="";
+    var let4="";
+    var let5="";
+    var let6="";
+    var let7="";
+    var let8g="";
+    var xhttp = new XMLHttpRequest();
+  	xhttp.onreadystatechange = function() {
+   		if (xhttp.readyState == 4 && xhttp.status == 200) {
+     		txtFile  = xhttp.responseText;//79339 lines of words
+     		txtArray = txtFile.split("\n");
+     		var leng = 79339;
+     		//leng = txtArray.length();
+			for (var i = 0; i < leng; i++) {
+				var letCpy = letters;
+				var lengWord = txtArray[i].length;
+				var good = true;
+				if(len>=lengWord)
+				{	
+
+					for(var j =0;j<lengWord; j++){
+						index = letCpy.indexOf(txtArray[i].charAt(j))
+						if(index>=0)
+						{
+							letCpy=letCpy.substr(0, index)+letCpy.substr(index+1);
+							//count the points here as well later.
+						}
+						else{
+							good = false;
+							break;
+						}
+					}
+				}
+				if(good){
+					switch(lengWord){
+						case 2:
+						let2+= txtArray[i]+" ";
+						break;
+						case 3:
+						let3+= txtArray[i]+" ";
+						break;
+						case 4:
+						let4+= txtArray[i]+" ";
+						break;
+						case 5:
+						let5+= txtArray[i]+" ";
+						break;
+						case 6:
+						let6+= txtArray[i]+" ";
+						break;
+						case 7:
+						let7+= txtArray[i]+" ";
+						break;
+						default:
+						let8g+= txtArray[i]+" ";
+
+					}
+				}
+			}
+			document.getElementById("result").innerHTML = "8+ letter words:"+ let8g +"<br><br>7 letter words:"+ let7 +"<br><br>6 letter words:"+ let6 +"<br>5 letter words:"+ let5 +"<br><br>4 letter words:"+ let4 +"<br><br>3 letter words:"+ let3 +"<br><br>2 letter words:"+ let2;
+    	} //use indexOf to find each letter within a copy of letters and then splice it 
+  	}
+  	xhttp.open("GET", "ospd.txt", true);
+  	xhttp.send();
+};
+
+</script>
+</head>
+<body>
+<p id="demo">
+	<input id="box" type="text" value="Letters Here">
+
+	Sort by:
+	<select id="sel">
+		<option value=1>points</value>
+		<option value=2>length</value>
+		<option value=3>alphabetical</value>
+	</select>
+	<button type="button" onclick="myFunction()">submit</button>
+</p>
+<p id="result"></p>
+<!-- eventually have option to sort output by points(default) word length, alphabetical-->
+</body>
+</html> 
