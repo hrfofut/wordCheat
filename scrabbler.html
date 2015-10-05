@@ -15,6 +15,7 @@ function myFunction() {
     loadFile();
 }
     function loadFile() {
+   	var blanks = document.getElementById("blanks").value;
     var let2="";
     var let3="";
     var let4="";
@@ -28,53 +29,80 @@ function myFunction() {
      		txtFile  = xhttp.responseText;//79339 lines of words
      		txtArray = txtFile.split("\n");
      		var leng = 79339;
+     		len += blanks;
+     		var dbug = " ";
      		//leng = txtArray.length();
 			for (var i = 0; i < leng; i++) {
+				var points = 0;
 				var letCpy = letters;
 				var lengWord = txtArray[i].length;
-				var good = true;
+				var good = true;//add blank letters
+				var blankTmp = blanks;
 				if(len>=lengWord)
 				{	
 
 					for(var j =0;j<lengWord; j++){
-						index = letCpy.indexOf(txtArray[i].charAt(j))
-						if(index>=0)
-						{
-							letCpy=letCpy.substr(0, index)+letCpy.substr(index+1);
+						n = letCpy.indexOf(txtArray[i].charAt(j))
+						ch = txtArray[i].charAt(j);
+						if(n>=0)
+						{//the point tally is terribly designed.
+							letCpy=letCpy.substr(0, n)+letCpy.substr(n+1);
+							if(ch=="d"||ch=="g")
+								points += 2;
+							else if(ch=='b'||ch=='c'||ch=='m'||ch=='p')
+								points += 3;
+							else if(ch=='f'||ch=='h'||ch=='v'||ch=='w'||ch=='y')
+								points += 4;
+							else if(ch=='k')
+								points += 5;
+							else if(ch=='j'||ch=='x')
+								points += 8;
+							else if(ch=='q'||ch=='z')
+								points += 10;
+							else
+								points++;
+							//debug+=n+" ";
+							//n is the letter
 							//count the points here as well later.
 						}
 						else{
+							if(blankTmp>0){
+								blankTmp--;
+							}
+							else{						
 							good = false;
-							break;
+							break;	
+							}
 						}
 					}
 				}
 				if(good){
 					switch(lengWord){
 						case 2:
-						let2+= txtArray[i]+" ";
+						let2+= "("+txtArray[i]+":"+points+")";
 						break;
 						case 3:
-						let3+= txtArray[i]+" ";
+						let3+= "("+txtArray[i]+":"+points+")";
 						break;
 						case 4:
-						let4+= txtArray[i]+" ";
+						let4+= "("+txtArray[i]+":"+points+")";
 						break;
 						case 5:
-						let5+= txtArray[i]+" ";
+						let5+= "("+txtArray[i]+":"+points+")";
 						break;
 						case 6:
-						let6+= txtArray[i]+" ";
+						let6+= "("+txtArray[i]+":"+points+")";
 						break;
 						case 7:
-						let7+= txtArray[i]+" ";
+						let7+= "("+txtArray[i]+":"+points+")";
 						break;
 						default:
-						let8g+= txtArray[i]+" ";
+						let8g+= "("+txtArray[i]+":"+points+")";
 
 					}
 				}
 			}
+			document.getElementById("debug").innerHTML = dbug;
 			document.getElementById("result").innerHTML = "8+ letter words:"+ let8g +"<br><br>7 letter words:"+ let7 +"<br><br>6 letter words:"+ let6 +"<br>5 letter words:"+ let5 +"<br><br>4 letter words:"+ let4 +"<br><br>3 letter words:"+ let3 +"<br><br>2 letter words:"+ let2;
     	} //use indexOf to find each letter within a copy of letters and then splice it 
   	}
@@ -88,6 +116,12 @@ function myFunction() {
 <p id="demo">
 	<input id="box" type="text" value="Letters Here">
 
+	Blank Tiles:
+	<select id="blanks">
+		<option value=0>0</value>
+		<option value=1>1</value>
+		<option value=2>2</value>
+	</select>
 	Sort by:
 	<select id="sel">
 		<option value=1>points</value>
@@ -97,6 +131,7 @@ function myFunction() {
 	<button type="button" onclick="myFunction()">submit</button>
 </p>
 <p id="result"></p>
+<p id="debug"></p>
 <!-- eventually have option to sort output by points(default) word length, alphabetical-->
 </body>
 </html> 
