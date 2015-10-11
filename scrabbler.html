@@ -7,6 +7,10 @@
 var txtFile = "Loading...";
 var len =0;
 var letters ="";
+function myF(){
+myFunction();
+return false;
+}
 function myFunction() {	
 	letters = document.getElementById("box").value;
 	len = letters.length;
@@ -111,9 +115,13 @@ function myFunction() {
 };
 
 </script>
+
+
 </head>
 <body>
 <p id="demo">
+	<form onsubmit="return myF()">
+  
 	<input id="box" type="text" value="Letters Here">
 
 	Blank Tiles:
@@ -128,7 +136,8 @@ function myFunction() {
 		<option value=2>length</value>
 		<option value=3>alphabetical</value>
 	</select>
-	<button type="button" onclick="myFunction()">submit</button>
+  <input type="submit" value="submit">
+</form>
 </p>
 <p id="result"></p>
 <p id="debug"></p>
