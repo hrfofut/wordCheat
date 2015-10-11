@@ -28,8 +28,12 @@ function myFunction() {
     var let7="";
     var let8g="";
     var xhttp = new XMLHttpRequest();
+
+	xhttp.overrideMimeType("text/plain; charset=x-user-defined");
   	xhttp.onreadystatechange = function() {
    		if (xhttp.readyState == 4 && xhttp.status == 200) {
+
+			
      		txtFile  = xhttp.responseText;//79339 lines of words
      		txtArray = txtFile.split("\n");
      		var leng = 79339;
