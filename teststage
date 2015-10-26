@@ -1,0 +1,20 @@
+ <!DOCTYPE html>
+<html>
+<meta charset="utf-8"/>
+<title>Word Winner</title>
+<head>
+<script type="text/javascript">
+function myF(){
+document.getElementById("debug").innerHTML="test"
+return false;
+}
+</script>
+	</head>
+	<body>
+		<form onsubmit="return myF()">
+			<input type="submit" value="submit">
+		</form>
+		<p id="debug">best</p>
+<!-- eventually have option to sort output by points(default) word length, alphabetical-->
+	</body>
+</html> 
